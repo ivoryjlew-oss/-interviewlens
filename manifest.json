@@ -1,0 +1,45 @@
+{
+  "name": "InterviewLens",
+  "short_name": "InterviewLens",
+  "description": "AI-powered interview teleprompter and live coaching assistant by Ivory Lewis",
+  "start_url": "/-interviewlens/",
+  "scope": "/-interviewlens/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#07090e",
+  "theme_color": "#0f1319",
+  "categories": ["productivity", "business", "education"],
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='42' fill='%230f1319'/%3E%3Ccircle cx='96' cy='96' r='62' fill='none' stroke='%235b8eff' stroke-width='10'/%3E%3Ccircle cx='96' cy='96' r='24' fill='%233dd68c'/%3E%3Cline x1='96' y1='10' x2='96' y2='46' stroke='%235b8eff' stroke-width='10' stroke-linecap='round'/%3E%3Cline x1='96' y1='146' x2='96' y2='182' stroke='%235b8eff' stroke-width='10' stroke-linecap='round'/%3E%3Cline x1='10' y1='96' x2='46' y2='96' stroke='%235b8eff' stroke-width='10' stroke-linecap='round'/%3E%3Cline x1='146' y1='96' x2='182' y2='96' stroke='%235b8eff' stroke-width='10' stroke-linecap='round'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%230f1319'/%3E%3Ccircle cx='256' cy='256' r='166' fill='none' stroke='%235b8eff' stroke-width='26'/%3E%3Ccircle cx='256' cy='256' r='64' fill='%233dd68c'/%3E%3Cline x1='256' y1='26' x2='256' y2='124' stroke='%235b8eff' stroke-width='26' stroke-linecap='round'/%3E%3Cline x1='256' y1='388' x2='256' y2='486' stroke='%235b8eff' stroke-width='26' stroke-linecap='round'/%3E%3Cline x1='26' y1='256' x2='124' y2='256' stroke='%235b8eff' stroke-width='26' stroke-linecap='round'/%3E%3Cline x1='388' y1='256' x2='486' y2='256' stroke='%235b8eff' stroke-width='26' stroke-linecap='round'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Teleprompter",
+      "short_name": "Teleprompter",
+      "description": "Open the teleprompter",
+      "url": "/-interviewlens/?tab=0",
+      "icons": [{ "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='20' fill='%230f1319'/%3E%3Crect x='18' y='24' width='60' height='8' rx='4' fill='%235b8eff'/%3E%3Crect x='18' y='40' width='48' height='8' rx='4' fill='%235b8eff'/%3E%3Crect x='18' y='56' width='54' height='8' rx='4' fill='%235b8eff'/%3E%3C/svg%3E", "sizes": "96x96" }]
+    },
+    {
+      "name": "Live Q&A",
+      "short_name": "Live Q&A",
+      "description": "Start a live coaching session",
+      "url": "/-interviewlens/?tab=2",
+      "icons": [{ "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='20' fill='%230f1319'/%3E%3Ccircle cx='48' cy='48' r='18' fill='%233dd68c'/%3E%3Ccircle cx='48' cy='48' r='30' fill='none' stroke='%233dd68c' stroke-width='4' opacity='.4'/%3E%3Ccircle cx='48' cy='48' r='42' fill='none' stroke='%233dd68c' stroke-width='3' opacity='.15'/%3E%3C/svg%3E", "sizes": "96x96" }]
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}
