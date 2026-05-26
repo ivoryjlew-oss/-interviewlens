@@ -4,7 +4,7 @@
 
 > *“Your past, your power, your interview.”*
 
-Created by **Ivory Lewis** · [Launch App](https://ivoryjlew-oss.github.io/Phorya)
+Created by **Ivory Lewis** · [Launch App](https://ivoryjlew-oss.github.io/Phorya/)
 
 -----
 
@@ -55,7 +55,7 @@ Your primary provider’s key is required. Add others optionally. Each has a dir
 **Step 3 — Preferences**
 Choose whether to remember your keys on the device and optionally set a 4-digit PIN to lock the app.
 
-Switch providers anytime from the **⚙️ AI** tab.
+Switch providers anytime from the **⚙️ AI** tab. Replay the tour anytime via the **✦ Tour** link in the footer.
 
 -----
 
@@ -87,18 +87,32 @@ Scroll your script hands-free during video interviews.
 
 ### ✦ AI Script Builder
 
-Generate a tailored, natural-sounding interview script in seconds.
+Generate a tailored, natural-sounding script for any interview question in seconds.
 
-- **13 question types** including Tell me about yourself, Strengths, Weaknesses, Salary requirements, Where do you see yourself in 5 years, and more — ordered from most to least common
+- **13 question types** ordered from most to least common:
+  - Tell me about yourself
+  - What are your greatest strengths?
+  - What do you consider to be your weaknesses?
+  - What interests you about this role?
+  - Why do you want to work here?
+  - Tell me about a challenge or conflict you’ve faced at work
+  - What are your salary requirements?
+  - Where do you see yourself in five years?
+  - Tell me about a time you made a mistake
+  - Why are you leaving your current job?
+  - How do you prioritize your work?
+  - What do you know about the company?
+  - Full interview script
 - Upload resume, cover letter, or job description (TXT, PDF, DOC, DOCX, JPG, PNG)
 - Send generated scripts directly to the teleprompter in one tap
 - Export as TXT or PDF
 
 ### ⚡ Live Q&A
 
-Type any question the interviewer asks and get an AI-coached response in real time.
+Get real-time AI coaching during your interview — type or speak the interviewer’s question.
 
-- **Mood detection** — analyzes the interviewer’s tone and adapts your response style
+- **🎤 Voice input** — tap the microphone button and speak the interviewer’s question out loud. The app transcribes it automatically and sends it to the AI
+- **Mood detection** — analyzes the interviewer’s tone (Positive, Skeptical, Engaged, Pressuring, Disengaged, Neutral) and adapts your response style
 - **Follow-up awareness** — builds on prior answers without repetition
 - **Auto-stop** — detects interview-ending phrases and saves automatically
 - Export sessions as TXT or formatted PDF
@@ -116,7 +130,7 @@ Enter your background once. Phorya uses it across every feature.
 - **Big Five** personality notes
 - **Numerology** — Life Path, Expression, Soul Urge, Destiny numbers
 - **Astrology** — Sun, Moon, Rising, Mercury, Venus, Mars placements + chart upload
-- **✦ AI Personality Summary** — synthesizes your profile entries with published research on your MBTI, Big Five, numerology, and astrological types into a personalized summary
+- **✦ AI Personality Summary** — synthesizes your profile with published research on your MBTI, Big Five, numerology, and astrological types
 - Upload documents (TXT, PDF, DOC, DOCX, JPG, PNG)
 
 ### 🎭 6 AI Personas
@@ -154,10 +168,11 @@ If Phorya has been helpful, tips are appreciated 💚
 ## Tech Stack
 
 - Pure vanilla HTML, CSS, and JavaScript — no frameworks, no build step
+- Web Speech API for voice input (Safari on iOS, Chrome on desktop)
 - Supports Claude, OpenAI (GPT), Google Gemini, Mistral, and DeepSeek
 - Progressive Web App (PWA) with service worker for offline support
 - Google Fonts for typography
-- Hosted on GitHub Pages
+- Hosted on GitHub Pages at <https://ivoryjlew-oss.github.io/Phorya/>
 
 -----
 
