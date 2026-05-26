@@ -1,20 +1,24 @@
-# InterviewLens
+# Phorya
 
-**AI-powered interview teleprompter, live coaching assistant, and session tracker.**
+**Go back, prepared. Get the job.**
+
+> *“Your past, your power, your interview.”*
 
 Created by **Ivory Lewis** · [Launch App](https://ivoryjlew-oss.github.io/-interviewlens/)
 
 -----
 
-## What It Does
+## What Is Phorya?
 
-InterviewLens is a personal interview preparation and live coaching tool built for job seekers who want to show up confident, prepared, and fully themselves. It combines a hands-free teleprompter, AI-generated scripts, real-time response coaching, mood detection, and interview session recording — all in one place, running entirely in your browser with no downloads required.
+Phorya is your AI-powered interview coach. Retrieve your past experiences, refine your responses in real time, and show up prepared, confident, and fully yourself — all in your browser.
+
+The name *Phorya* draws from *Sankofa* — an Adinkra symbol from the Akan people of Ghana meaning “go back and get it.” It represents the wisdom of drawing from your past to build your future. In interviews, your lived experience is your greatest asset. Phorya helps you retrieve it, shape it, and speak it confidently.
 
 -----
 
 ## Install as an App (Recommended)
 
-InterviewLens is a Progressive Web App (PWA). Install it directly on your device for a full-screen, native app experience.
+Phorya is a Progressive Web App (PWA). Install it on your device for a full-screen, native app experience.
 
 ### iPhone & iPad (Safari)
 
@@ -40,18 +44,18 @@ InterviewLens is a Progressive Web App (PWA). Install it directly on your device
 
 ## First-Time Setup
 
-On first launch, InterviewLens walks you through a 3-step setup:
+On first launch, Phorya walks you through a 3-step setup:
 
 **Step 1 — Choose your primary AI provider**
-Select which AI model powers your experience. All five providers are supported — pick the one you have a key for.
+Select which AI model powers Phorya. All five providers are supported.
 
 **Step 2 — Enter your API keys**
-Your primary provider’s key is required. You can optionally add keys for other providers at the same time. Each provider has a direct link to get your key. Your primary key is verified before you proceed.
+Your primary provider’s key is required. Add others optionally. Each has a direct link to get your key. Your key is verified before you proceed.
 
 **Step 3 — Preferences**
 Choose whether to remember your keys on the device and optionally set a 4-digit PIN to lock the app.
 
-You can update, add, or switch providers anytime from the **⚙️ AI** tab.
+Switch providers anytime from the **⚙️ AI** tab.
 
 -----
 
@@ -73,54 +77,49 @@ You can update, add, or switch providers anytime from the **⚙️ AI** tab.
 
 Scroll your script hands-free during video interviews.
 
-- **Rich text editor** — format your script with bold, italic, underline, custom fonts, and custom sizes. Select any text to get a floating formatting toolbar
-- Adjustable scroll speed and font size (S / M / L / XL presets)
+- **Rich text editor** — format with bold, italic, underline, custom fonts, and sizes. Select any text for a floating formatting toolbar
+- Adjustable scroll speed and font size presets (S / M / L / XL)
 - 6 readability-optimized fonts including Atkinson Hyperlegible and Lexend
 - Mirror mode for teleprompter glass setups
 - Transparent overlay mode for use during live calls
-- **Named script library** — save multiple named scripts for different roles and companies
+- **Named script library** — save multiple scripts for different roles
 - Keyboard shortcuts: Space to start/stop · ↑/↓ to adjust speed · R to reset
 
 ### ✦ AI Script Builder
 
-Generate a tailored, natural-sounding interview script based on your background and the role.
+Generate a tailored, natural-sounding interview script in seconds.
 
-- 4 script types: Tell me about yourself · Why this company · Closing statement · Full script
+- **13 question types** including Tell me about yourself, Strengths, Weaknesses, Salary requirements, Where do you see yourself in 5 years, and more — ordered from most to least common
 - Upload resume, cover letter, or job description (TXT, PDF, DOC, DOCX, JPG, PNG)
 - Send generated scripts directly to the teleprompter in one tap
 - Export as TXT or PDF
 
 ### ⚡ Live Q&A
 
-Type any question the interviewer asks and receive an AI-coached response in real time.
+Type any question the interviewer asks and get an AI-coached response in real time.
 
-- **Mood detection** — analyzes the interviewer’s tone (Positive, Skeptical, Engaged, Pressuring, Disengaged, Neutral) and adapts response style accordingly
-- **Follow-up awareness** — detects when questions build on prior topics and responds with depth, not repetition
-- **Auto-stop** — listens for interview-ending phrases and automatically saves the session
-- Full conversation history stays on screen for the session
+- **Mood detection** — analyzes the interviewer’s tone and adapts your response style
+- **Follow-up awareness** — builds on prior answers without repetition
+- **Auto-stop** — detects interview-ending phrases and saves automatically
 - Export sessions as TXT or formatted PDF
 
 ### 📁 Sessions
 
-Every Live Q&A session is automatically saved and organized by company.
-
-- Browse sessions by company with mood timelines and full Q&A transcripts
-- View, download (TXT or PDF), or delete individual sessions or entire company histories
+Every session is saved and organized by company, with mood timelines and full transcripts.
 
 ### 👤 My Profile
 
-Enter your background once and the AI uses it across every feature — scripts, live Q&A, and mood-adapted responses.
+Enter your background once. Phorya uses it across every feature.
 
-- Name, title, professional summary, core strengths, personality style, and work history
-- **MBTI** — full 16-type dropdown with type names
-- **Big Five** — free-text personality notes
-- **Numerology** — Life Path, Expression, Soul Urge, and Destiny numbers
-- **Astrology / Natal Chart** — Sun, Moon, Rising, Mercury, Venus, Mars placements plus chart notes and natal chart file upload
-- Upload documents (TXT, PDF, DOC, DOCX, JPG, PNG) — resume, cover letters, writing samples
+- Name, title, summary, strengths, personality style, work history
+- **MBTI** — full 16-type selector
+- **Big Five** personality notes
+- **Numerology** — Life Path, Expression, Soul Urge, Destiny numbers
+- **Astrology** — Sun, Moon, Rising, Mercury, Venus, Mars placements + chart upload
+- **✦ AI Personality Summary** — synthesizes your profile entries with published research on your MBTI, Big Five, numerology, and astrological types into a personalized summary
+- Upload documents (TXT, PDF, DOC, DOCX, JPG, PNG)
 
 ### 🎭 6 AI Personas
-
-Choose the voice and style that fits the moment — switchable anytime, even mid-interview.
 
 |Persona          |Style                                  |
 |-----------------|---------------------------------------|
@@ -133,19 +132,22 @@ Choose the voice and style that fits the moment — switchable anytime, even mid
 
 ### ⚙️ AI Provider Tab
 
-Switch AI providers, manage keys, select models, and test your connection — all without leaving the app.
+Switch providers, manage API keys, select models, and test your connection without leaving the app.
 
 -----
 
 ## Privacy
 
-All your data — profile, scripts, API keys, and session history — is stored exclusively in your browser’s local storage on your own device. Nothing is transmitted to or stored on any server controlled by Ivory Lewis. AI features communicate directly with your chosen provider using your own API key.
+All data — profile, scripts, API keys, and sessions — is stored in your browser’s local storage on your device only. Nothing is sent to any server controlled by Ivory Lewis. AI features communicate directly with your chosen provider using your own API key.
 
 -----
 
 ## Tips Welcome
 
-If InterviewLens has been helpful, tips are appreciated via Chime: **[$IV-LGUE](https://app.chime.com/link/qr?u=IV-LGUE)** 💚
+If Phorya has been helpful, tips are appreciated 💚
+
+- **Cash App:** [$ivoryjlew](https://cash.app/$ivoryjlew)
+- **PayPal:** [paypal.me/IJL216](https://www.paypal.me/IJL216)
 
 -----
 
@@ -163,7 +165,7 @@ If InterviewLens has been helpful, tips are appreciated via Chime: **[$IV-LGUE](
 
 © 2026 Ivory Lewis. All rights reserved.
 
-InterviewLens is an original work created by and belonging to Ivory Lewis, protected under United States copyright law (17 U.S.C. § 101 et seq.) and applicable international treaties.
+Phorya is an original work created by and belonging to Ivory Lewis, protected under United States copyright law (17 U.S.C. § 101 et seq.) and applicable international treaties.
 
 **This application may not be copied, reproduced, redistributed, modified, or used for commercial purposes without the express written permission of Ivory Lewis.**
 
@@ -171,4 +173,4 @@ For licensing inquiries, please contact the creator directly.
 
 -----
 
-*InterviewLens — built to help you walk in prepared and walk out confident.*
+*Phorya — Go back, prepared. Get the job.*
