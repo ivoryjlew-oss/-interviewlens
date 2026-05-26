@@ -1,7 +1,7 @@
 {
-  "name": "InterviewLens",
-  "short_name": "InterviewLens",
-  "description": "AI-powered interview teleprompter, live coaching, mood detection, and session tracker by Ivory Lewis. Supports Claude, OpenAI, Gemini, Mistral, and DeepSeek.",
+  "name": "Phorya",
+  "short_name": "Phorya",
+  "description": "Phorya: Go back, prepared. Get the job. AI-powered interview coaching by Ivory Lewis.",
   "start_url": "/-interviewlens/",
   "scope": "/-interviewlens/",
   "display": "standalone",

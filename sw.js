@@ -1,9 +1,9 @@
-// InterviewLens Service Worker
+// Phorya Service Worker
 // © 2026 Ivory Lewis. All rights reserved.
 
-const CACHE_NAME = 'interviewlens-v3';
-const STATIC_CACHE = 'interviewlens-static-v3';
-const FONT_CACHE = 'interviewlens-fonts-v1';
+const CACHE_NAME = 'phorya-v1';
+const STATIC_CACHE = 'phorya-static-v1';
+const FONT_CACHE = 'phorya-fonts-v1';
 
 // Files to cache immediately on install
 const PRECACHE_URLS = [
