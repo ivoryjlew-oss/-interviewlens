@@ -4,7 +4,7 @@
 
 > *“Your past, your power, your interview.”*
 
-Created by **Ivory Lewis** · [Launch App](https://ivoryjlew-oss.github.io/-interviewlens/)
+Created by **Ivory Lewis** · [Launch App](https://ivoryjlew-oss.github.io/Phorya)
 
 -----
 
