@@ -22,7 +22,7 @@ Phorya is a Progressive Web App (PWA). Install it on your device for a full-scre
 
 ### iPhone & iPad (Safari)
 
-1. Open <https://ivoryjlew-oss.github.io/-interviewlens/> in **Safari**
+1. Open <https://ivoryjlew-oss.github.io/Phorya/> in **Safari**
 1. Tap the **Share** button (box with arrow pointing up)
 1. Tap **Add to Home Screen**
 1. Tap **Add**
