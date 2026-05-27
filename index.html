@@ -1370,9 +1370,9 @@ function initGates() {
     return;
   }
 
-  // ── State ──
+  // Clear any stale provider so nothing is pre-selected
   let currentStep = 0;
-  let selectedProvider = null;  // no default — user must choose
+  let selectedProvider = null;  // user must actively choose — no default
   const enteredKeys = {}; // { providerId: keyValue }
   let setupPin = '';
 
@@ -1398,7 +1398,7 @@ function initGates() {
     if(!list) return;
     list.innerHTML = '';
     AI_PROVIDERS.forEach(p => {
-      const isSelected = p.id === selectedProvider;
+      const isSelected = selectedProvider !== null && p.id === selectedProvider;
       const row = document.createElement('div');
       row.className = 'provider-option' + (isSelected ? ' selected' : '');
       row.innerHTML = `
@@ -1433,7 +1433,7 @@ function initGates() {
     if(!container) return;
     container.innerHTML = '';
     AI_PROVIDERS.forEach(p => {
-      const isPrimary = p.id === selectedProvider;
+      const isPrimary = selectedProvider !== null && p.id === selectedProvider;
       const isOllama = p.id === 'ollama';
       const existing = isOllama
         ? (lsGet('il_ollama_url') || 'http://localhost:11434')
@@ -1441,7 +1441,11 @@ function initGates() {
       const row = document.createElement('div');
       row.className = 'provider-key-row';
       row.style.border = isPrimary ? '1px solid var(--accent)' : '1px solid var(--border)';
-      const primaryBadge = isPrimary ? '<span style="font-size:.65rem;color:var(--accent);font-weight:700;background:rgba(91,142,255,.12);padding:1px 7px;border-radius:10px">PRIMARY</span>' : '<span style="font-size:.65rem;color:var(--muted)">(optional)</span>';
+      const primaryBadge = isPrimary
+        ? '<span style="font-size:.65rem;color:var(--accent);font-weight:700;background:rgba(91,142,255,.12);padding:1px 7px;border-radius:10px">PRIMARY</span>'
+        : (selectedProvider === null
+            ? ''
+            : '<span style="font-size:.65rem;color:var(--muted)">(optional)</span>');
       const freeBadge = p.free ? `<span style="font-size:.65rem;color:var(--green);font-weight:600">${p.freeNote}</span>` : '';
       if(isOllama) {
         row.innerHTML = `
