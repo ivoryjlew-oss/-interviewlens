@@ -858,9 +858,10 @@ html,body{height:100%;background:#07090e;color:#e8eaf2;font-family:'DM Sans',sys
           <div class="card-body" style="font-size:.8rem;color:var(--text2);line-height:1.7;gap:6px">
             <div>🎯 <strong style="color:var(--text)">Claude (Anthropic)</strong> — <a href="https://console.anthropic.com" target="_blank" style="color:var(--accent)">console.anthropic.com</a></div>
             <div>🤖 <strong style="color:var(--text)">OpenAI (GPT)</strong> — <a href="https://platform.openai.com/api-keys" target="_blank" style="color:var(--accent)">platform.openai.com/api-keys</a></div>
-            <div>💎 <strong style="color:var(--text)">Google Gemini</strong> — <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:var(--accent)">aistudio.google.com</a></div>
+            <div>💎 <strong style="color:var(--text)">Google Gemini</strong> — <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:var(--accent)">aistudio.google.com</a> <span style="color:var(--green);font-size:.7rem">✓ Free tier</span></div>
             <div>🌊 <strong style="color:var(--text)">Mistral</strong> — <a href="https://console.mistral.ai/" target="_blank" style="color:var(--accent)">console.mistral.ai</a></div>
             <div>🔍 <strong style="color:var(--text)">DeepSeek</strong> — <a href="https://platform.deepseek.com/api_keys" target="_blank" style="color:var(--accent)">platform.deepseek.com</a></div>
+            <div>🖥️ <strong style="color:var(--text)">Ollama (Local)</strong> — <a href="https://ollama.com" target="_blank" style="color:var(--accent)">ollama.com</a> <span style="color:var(--green);font-size:.7rem">✓ 100% free, runs on your computer</span></div>
             <div style="margin-top:6px;padding:8px 11px;background:rgba(91,142,255,.06);border:1px solid rgba(91,142,255,.15);border-radius:7px;font-size:.75rem">
               🔒 All API keys are stored only on your device. They are sent directly to the provider and never shared with Phorya.
             </div>
@@ -1182,6 +1183,12 @@ async function testApiKey(key, providerId) {
         body:JSON.stringify({model:'deepseek-chat',max_tokens:5,messages:[{role:'user',content:'Hi'}]}),
       });
       return res.status !== 401 && res.status !== 403;
+    } else if (pid === 'ollama') {
+      const ollamaUrl = lsGet('il_ollama_url') || key || 'http://localhost:11434';
+      try {
+        res = await fetch(`${ollamaUrl}/api/tags`);
+        return res.ok;
+      } catch { return false; }
     }
     return true; // Unknown provider — allow through
   } catch { return true; } // Network error — don't block
@@ -1269,6 +1276,24 @@ async function callAI(messages, system, onChunk, maxTokens=1000) {
       throw new Error('API error '+res.status+(t?': '+t.slice(0,120):''));}
     const d = await res.json();
     text = d?.choices?.[0]?.message?.content || '';
+
+  } else if(pid === 'ollama') {
+    const ollamaUrl = lsGet('il_ollama_url') || 'http://localhost:11434';
+    const model = lsGet('il_model') || 'llama3';
+    const body = { model, stream: false,
+      messages: system ? [{role:'system',content:system},...messages] : messages };
+    try {
+      res = await fetch(`${ollamaUrl}/api/chat`, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(body),
+      });
+    } catch {
+      throw new Error('Cannot reach Ollama. Make sure Ollama is running on your computer and the URL is correct in the ⚙️ AI tab.');
+    }
+    if(!res.ok){ let t=''; try{t=await res.text();}catch{}
+      throw new Error('Ollama error '+res.status+(t?': '+t.slice(0,120):''));}
+    const d = await res.json();
+    text = d?.message?.content || '';
 
   } else {
     // Fallback to Claude
@@ -1409,48 +1434,74 @@ function initGates() {
     container.innerHTML = '';
     AI_PROVIDERS.forEach(p => {
       const isPrimary = p.id === selectedProvider;
-      const existing = enteredKeys[p.id] || lsGet('il_key_'+p.id) || '';
+      const isOllama = p.id === 'ollama';
+      const existing = isOllama
+        ? (lsGet('il_ollama_url') || 'http://localhost:11434')
+        : (enteredKeys[p.id] || lsGet('il_key_'+p.id) || '');
       const row = document.createElement('div');
       row.className = 'provider-key-row';
       row.style.border = isPrimary ? '1px solid var(--accent)' : '1px solid var(--border)';
-      row.innerHTML = `
-        <label style="display:flex;align-items:center;gap:6px">
-          <span>${p.label}</span>
-          ${isPrimary ? '<span style="font-size:.65rem;color:var(--accent);font-weight:700;background:rgba(91,142,255,.12);padding:1px 7px;border-radius:10px">PRIMARY</span>' : '<span style="font-size:.65rem;color:var(--muted)">(optional)</span>'}
-        </label>
-        <div style="position:relative;display:flex;align-items:center">
-          <input type="password" id="key-input-${p.id}" value="${esc(existing)}"
-            placeholder="${p.keyPrefix||''}…"
-            autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false"
-            style="background:var(--bg);border:1px solid var(--border2);border-radius:7px;color:var(--text);font-family:var(--mono);font-size:14px;padding:8px 38px 8px 10px;outline:none;width:100%;transition:border-color .2s"/>
-          <button type="button" onclick="(function(){const i=document.getElementById('key-input-${p.id}');i.type=i.type==='password'?'text':'password'})()"
-            style="position:absolute;right:8px;background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;line-height:0;touch-action:manipulation">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          </button>
-        </div>
-        <div style="font-size:.68rem;color:var(--muted)">
-          Get your key at <a href="${p.docsUrl}" target="_blank" style="color:var(--accent)">${p.docsUrl.replace('https://','')}</a>
-        </div>
-        ${existing ? '<div class="provider-key-saved">✓ Key saved</div>' : ''}
-      `;
-      // Save on input
+      const primaryBadge = isPrimary ? '<span style="font-size:.65rem;color:var(--accent);font-weight:700;background:rgba(91,142,255,.12);padding:1px 7px;border-radius:10px">PRIMARY</span>' : '<span style="font-size:.65rem;color:var(--muted)">(optional)</span>';
+      const freeBadge = p.free ? `<span style="font-size:.65rem;color:var(--green);font-weight:600">${p.freeNote}</span>` : '';
+      if(isOllama) {
+        row.innerHTML = `
+          <label style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+            <span>${p.label}</span>${primaryBadge}${freeBadge}
+          </label>
+          <div style="font-size:.75rem;color:var(--text2);line-height:1.6;background:rgba(61,214,140,.06);border:1px solid rgba(61,214,140,.15);border-radius:7px;padding:8px 11px">
+            🖥️ Ollama runs AI locally on your computer — completely free, no account needed.<br/>
+            <strong style="color:var(--green)">Setup:</strong> Download from <a href="https://ollama.com" target="_blank" style="color:var(--accent)">ollama.com</a>, install it, then run <code style="background:var(--bg);padding:1px 5px;border-radius:4px;font-family:var(--mono)">ollama run llama3</code> in your terminal.
+          </div>
+          <label style="font-size:.72rem;color:var(--muted);font-weight:600">Ollama Server URL</label>
+          <input type="text" id="key-input-${p.id}" value="${existing}"
+            placeholder="http://localhost:11434"
+            autocomplete="off" spellcheck="false"
+            style="background:var(--bg);border:1px solid var(--border2);border-radius:7px;color:var(--text);font-family:var(--mono);font-size:14px;padding:8px 10px;outline:none;width:100%"/>
+          <div style="font-size:.68rem;color:var(--muted)">Default is http://localhost:11434. Only change if you've set a custom port.</div>
+        `;
+      } else {
+        row.innerHTML = `
+          <label style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+            <span>${p.label}</span>${primaryBadge}${freeBadge}
+          </label>
+          <div style="position:relative;display:flex;align-items:center">
+            <input type="password" id="key-input-${p.id}" value="${esc(existing)}"
+              placeholder="${p.keyPrefix||''}…"
+              autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false"
+              style="background:var(--bg);border:1px solid var(--border2);border-radius:7px;color:var(--text);font-family:var(--mono);font-size:14px;padding:8px 38px 8px 10px;outline:none;width:100%"/>
+            <button type="button" onclick="(function(){const i=document.getElementById('key-input-${p.id}');i.type=i.type==='password'?'text':'password'})()"
+              style="position:absolute;right:8px;background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;line-height:0;touch-action:manipulation">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div style="font-size:.68rem;color:var(--muted)">
+            Get your key at <a href="${p.docsUrl}" target="_blank" style="color:var(--accent)">${p.docsUrl.replace('https://','')}</a>
+          </div>
+          ${existing ? '<div class="provider-key-saved">✓ Key saved</div>' : ''}
+        `;
+      }
       const inp = row.querySelector('input');
-      inp?.addEventListener('input', ()=>{ enteredKeys[p.id] = inp.value.trim(); });
+      inp?.addEventListener('input', ()=>{
+        if(isOllama) lsSet('il_ollama_url', inp.value.trim());
+        else enteredKeys[p.id] = inp.value.trim();
+      });
       container.appendChild(row);
     });
   }
 
   document.getElementById('btn-step1-back').addEventListener('click', ()=>goToStep(0));
   document.getElementById('btn-step1-next').addEventListener('click', async()=>{
-    // Collect all entered keys
+    // Collect all entered keys / Ollama URL
     AI_PROVIDERS.forEach(p=>{
       const inp = document.getElementById('key-input-'+p.id);
-      if(inp&&inp.value.trim()) enteredKeys[p.id] = inp.value.trim();
+      if(!inp) return;
+      if(p.id==='ollama') { if(inp.value.trim()) lsSet('il_ollama_url', inp.value.trim()); }
+      else if(inp.value.trim()) enteredKeys[p.id] = inp.value.trim();
     });
-    // Validate primary key exists
-    const primaryKey = enteredKeys[selectedProvider];
+    // Validate primary — Ollama just needs to be reachable, others need a key
+    const primaryKey = selectedProvider==='ollama' ? (lsGet('il_ollama_url')||'http://localhost:11434') : enteredKeys[selectedProvider];
     const err = document.getElementById('gstep1-err');
-    if(!primaryKey){
+    if(!primaryKey && selectedProvider !== 'ollama'){
       err.textContent='Please enter an API key for your primary provider ('+AI_PROVIDERS.find(p=>p.id===selectedProvider)?.label+').';
       err.style.display='block'; return;
     }
@@ -2507,13 +2558,29 @@ function initProviderTab(){
 
 function renderProviderKeySection(){
   const p=getProvider();
-  document.getElementById('provider-key-title').textContent='🔑 '+p.label+' API Key';
-  document.getElementById('provider-key-label').textContent=p.label+' API Key';
-  document.getElementById('provider-key-input').value=lsGet('il_key_'+p.id)||'';
-  document.getElementById('provider-key-input').placeholder='Paste your '+p.label+' API key…';
+  const isOllama = p.id === 'ollama';
+  document.getElementById('provider-key-title').textContent='🔑 '+p.label+(isOllama?' Setup':' API Key');
+  document.getElementById('provider-key-label').textContent=isOllama?'Ollama Server URL':p.label+' API Key';
+  const keyInp = document.getElementById('provider-key-input');
+  if(isOllama){
+    keyInp.value=lsGet('il_ollama_url')||'http://localhost:11434';
+    keyInp.type='text';
+    keyInp.placeholder='http://localhost:11434';
+    document.getElementById('provider-eye').style.display='none';
+    document.getElementById('provider-docs-link').innerHTML=`
+      🖥️ Ollama runs AI locally — no API key needed.<br/>
+      <strong style="color:var(--green)">Setup:</strong> Download from <a href="https://ollama.com" target="_blank" style="color:var(--accent)">ollama.com</a>, install it, then run
+      <code style="background:var(--bg);padding:1px 5px;border-radius:4px;font-family:var(--mono);font-size:.72rem">ollama run llama3</code> in your terminal.
+      Once running, tap Test Connection to verify.`;
+  } else {
+    keyInp.value=lsGet('il_key_'+p.id)||'';
+    keyInp.type='password';
+    keyInp.placeholder='Paste your '+p.label+' API key…';
+    document.getElementById('provider-eye').style.display='';
+    document.getElementById('provider-docs-link').innerHTML=`Get your key at <a href="${p.docsUrl}" target="_blank" style="color:var(--accent)">${p.docsUrl.replace('https://','')}</a>`;
+  }
   const sel=document.getElementById('provider-model-select');
   sel.innerHTML=p.models.map(m=>`<option${m===getProviderModel()?' selected':''}>${m}</option>`).join('');
-  document.getElementById('provider-docs-link').innerHTML=`Get your key at <a href="${p.docsUrl}" target="_blank" style="color:var(--accent)">${p.docsUrl.replace('https://','')}</a>`;
 }
 
 // Eye toggle for provider key
@@ -2526,11 +2593,14 @@ document.getElementById('btn-save-provider')?.addEventListener('click',()=>{
   const p=getProvider();
   const key=document.getElementById('provider-key-input').value.trim();
   const model=document.getElementById('provider-model-select').value;
-  if(key) lsSet('il_key_'+p.id,key);
+  if(p.id==='ollama'){
+    if(key) lsSet('il_ollama_url',key);
+  } else {
+    if(key) lsSet('il_key_'+p.id,key);
+    if(p.id==='anthropic'&&key){ lsSet('il_apikey_v1',key); }
+  }
   lsSet('il_model',model);
   showToast('✓ '+p.label+' saved');
-  // Also update main API key if anthropic
-  if(p.id==='anthropic'&&key){ lsSet('il_apikey_v1',key); }
 });
 
 document.getElementById('btn-test-provider')?.addEventListener('click',async()=>{
@@ -3014,11 +3084,12 @@ function readAnyFile(file, onText, onImage) {
 // AI PROVIDER SYSTEM
 // ═══════════════════════════════════════
 const AI_PROVIDERS = [
-  { id:'anthropic', label:'Claude (Anthropic)', models:['claude-sonnet-4-20250514','claude-opus-4-5','claude-haiku-4-5-20251001'], apiUrl:'https://api.anthropic.com/v1/messages', keyPrefix:'sk-ant-', docsUrl:'https://console.anthropic.com' },
-  { id:'openai',    label:'OpenAI (GPT)',        models:['gpt-4o','gpt-4o-mini','gpt-4-turbo'],                                    apiUrl:'https://api.openai.com/v1/chat/completions', keyPrefix:'sk-',     docsUrl:'https://platform.openai.com/api-keys' },
-  { id:'gemini',    label:'Google Gemini',       models:['gemini-1.5-pro','gemini-1.5-flash','gemini-2.0-flash-exp'],              apiUrl:'https://generativelanguage.googleapis.com/v1beta/models/', keyPrefix:'AIza', docsUrl:'https://aistudio.google.com/app/apikey' },
-  { id:'mistral',   label:'Mistral',             models:['mistral-large-latest','mistral-medium-latest','open-mistral-7b'],        apiUrl:'https://api.mistral.ai/v1/chat/completions', keyPrefix:'',       docsUrl:'https://console.mistral.ai/' },
-  { id:'deepseek',  label:'DeepSeek',            models:['deepseek-chat','deepseek-reasoner'],                                     apiUrl:'https://api.deepseek.com/v1/chat/completions', keyPrefix:'sk-',   docsUrl:'https://platform.deepseek.com/api_keys' },
+  { id:'anthropic', label:'Claude (Anthropic)', models:['claude-sonnet-4-20250514','claude-opus-4-5','claude-haiku-4-5-20251001'], apiUrl:'https://api.anthropic.com/v1/messages', keyPrefix:'sk-ant-', docsUrl:'https://console.anthropic.com', free:false },
+  { id:'openai',    label:'OpenAI (GPT)',        models:['gpt-4o','gpt-4o-mini','gpt-4-turbo'],                                    apiUrl:'https://api.openai.com/v1/chat/completions', keyPrefix:'sk-',     docsUrl:'https://platform.openai.com/api-keys', free:false },
+  { id:'gemini',    label:'Google Gemini',       models:['gemini-1.5-pro','gemini-1.5-flash','gemini-2.0-flash-exp'],              apiUrl:'https://generativelanguage.googleapis.com/v1beta/models/', keyPrefix:'AIza', docsUrl:'https://aistudio.google.com/app/apikey', free:true, freeNote:'Free tier — Google account only' },
+  { id:'mistral',   label:'Mistral',             models:['mistral-large-latest','mistral-medium-latest','open-mistral-7b'],        apiUrl:'https://api.mistral.ai/v1/chat/completions', keyPrefix:'',       docsUrl:'https://console.mistral.ai/', free:false },
+  { id:'deepseek',  label:'DeepSeek',            models:['deepseek-chat','deepseek-reasoner'],                                     apiUrl:'https://api.deepseek.com/v1/chat/completions', keyPrefix:'sk-',   docsUrl:'https://platform.deepseek.com/api_keys', free:false },
+  { id:'ollama',    label:'Ollama (Local AI)',    models:['llama3','llama3.1','mistral','gemma2','phi3','qwen2','codellama'],       apiUrl:'http://localhost:11434', keyPrefix:'',           docsUrl:'https://ollama.com', free:true, freeNote:'100% free — runs on your computer', local:true },
 ];
 
 function getProvider() {
