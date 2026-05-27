@@ -48,10 +48,10 @@ Phorya is a Progressive Web App (PWA). Install it on your device for a full-scre
 When you open Phorya for the first time, a 3-step setup guides you in:
 
 **Step 1 — Choose your AI provider**
-Select which AI model powers your experience. Five providers are supported. Gemini has a free tier — see the API Key Guide below.
+Select which AI model powers your experience. No provider is pre-selected — you choose. Five cloud providers are supported plus Ollama for local AI. Gemini has a free tier and is a great starting point — see the API Key Guide below.
 
 **Step 2 — Enter your API key(s)**
-Your primary provider’s key is required. All others are optional and can be added later in the ⚙️ AI tab. Each provider has a direct link to get your key. Your key is verified before you proceed.
+Your primary provider’s key is required. All others are optional and can be added later in the ⚙️ AI tab. Each provider has a direct link to get your key. Your key is verified before you proceed. All AI features — script generation, Live Q&A, mood detection, and the AI Personality Summary — use whichever provider you have selected.
 
 **Step 3 — Preferences**
 Choose whether to remember your keys on the device and optionally set a 4-digit PIN to lock the app.
