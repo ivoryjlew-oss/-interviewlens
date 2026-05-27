@@ -1,8 +1,8 @@
 // Phorya Service Worker
 // © 2026 Ivory Lewis. All rights reserved.
 
-const CACHE_NAME = 'phorya-v4';
-const STATIC_CACHE = 'phorya-static-v4';
+const CACHE_NAME = 'phorya-v5';
+const STATIC_CACHE = 'phorya-static-v5';
 const FONT_CACHE = 'phorya-fonts-v1';
 
 // Files to cache immediately on install
