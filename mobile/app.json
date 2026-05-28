@@ -1,0 +1,47 @@
+{
+  "expo": {
+    "name": "Phorya",
+    "slug": "phorya",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "backgroundColor": "#080814"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.phorya.app",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "Phorya uses your microphone to transcribe interview questions during Live Q&A coaching sessions.",
+        "NSSpeechRecognitionUsageDescription": "Phorya uses speech recognition to convert spoken interview questions to text for real-time AI coaching."
+      }
+    },
+    "android": {
+      "package": "com.phorya.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#080814",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ],
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-document-picker",
+      "expo-secure-store",
+      [
+        "expo-print",
+        {}
+      ]
+    ]
+  }
+}
